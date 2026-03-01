@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR-сканер</title>
+    <!-- Подключаем A-Frame и MindAR -->
+    <script src="js/aframe.min.js"></script>
+    <script src="js/mindar-image-aframe.prod.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene
+        mindar-image="imageTargetSrc: markers/marker.mind; autoStart: true;"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
+    >
+        <!-- Ассеты: загружаем модель GLB -->
+        <a-assets>
+            <a-asset-item id="model" src="models/model.glb"></a-asset-item>
+        </a-assets>
+
+        <!-- Камера AR (обязательно с look-controls="false") -->
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+        <!-- Целевой маркер (индекс 0) -->
+        <a-entity mindar-image-target="targetIndex: 0">
+            <!-- Сама модель: настройте позицию, поворот и масштаб под ваш маркер -->
+            <a-gltf-model
+                src="#model"
+                position="0 0 0"
+                rotation="90 0 0"
+                scale="0.3 0.3 0.3"
+                animation-mixer="loop: repeat"
+            ></a-gltf-model>
+        </a-entity>
+    </a-scene>
+
+    <!-- Для поддержки анимаций модели, если они не проигрываются автоматически, 
+         можно добавить компонент animation-mixer из aframe-extras.
+         Для этого раскомментируйте следующую строку:
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script> -->
+</body>
+</html>
